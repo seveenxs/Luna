@@ -13,8 +13,8 @@ export interface PrefixCommandInformation {
 }
 
 export interface PrefixCommandPermission {
-    author: PermissionResolvable[] | PermissionResolvable;
-    client: PermissionResolvable[] | PermissionResolvable;
+    author?: PermissionResolvable[] | PermissionResolvable;
+    client?: PermissionResolvable[] | PermissionResolvable;
 }
 
 export interface PrefixCommandProps {

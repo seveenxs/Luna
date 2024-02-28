@@ -17,8 +17,8 @@ export interface SlashCommandData {
 }
 
 export interface SlashCommandPermission {
-    author: PermissionResolvable[] | PermissionResolvable;
-    client: PermissionResolvable[] | PermissionResolvable;
+    author?: PermissionResolvable[] | PermissionResolvable;
+    client?: PermissionResolvable[] | PermissionResolvable;
 }
 
 export interface SlashCommandProps<T extends ApplicationCommandType> {
