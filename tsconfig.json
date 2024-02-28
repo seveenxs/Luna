@@ -2,7 +2,7 @@
   "compilerOptions": {
     "lib": ["ESNext"],
     "removeComments": true,
-    "rootDir": "./source",
+    "rootDir": "./src",
     "outDir": "dist",
     "target": "ESNext",
     "module": "CommonJS",
@@ -17,16 +17,16 @@
     "importHelpers": true,
     "baseUrl": ".",
     "paths": {
-      "@constructors/*": ["./source/constructors/*"],
-      "@constants/*": ["./source/constants/*"],
-      "@classes/*": ["./source/classes/*"]
+      "@constructors/*": ["./src/constructors/*"],
+      "@constants/*": ["./src/constants/*"],
+      "@classes/*": ["./src/classes/*"],
     },
     "typeRoots": [
       "./node_modules/@types"
     ]
   },
   "include": [
-    "source"
+    "src"
   ],
   "exclude": [
     "node_modules",

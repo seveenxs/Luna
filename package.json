@@ -1,0 +1,29 @@
+{
+  "name": "luna-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "dev:test": "tsx src/index.spec.ts"
+  },
+  "keywords": [
+    "Discord",
+    "Bot",
+    "Discord Bot",
+    "Luna"
+  ],
+  "author": "Lunaris Team",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.14.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.17",
+    "dotenv": "^16.4.5",
+    "glob": "^10.3.10",
+    "strcolorize": "^1.0.7",
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3"
+  }
+}

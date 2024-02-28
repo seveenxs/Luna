@@ -12,11 +12,11 @@ T extends 'RoleSelectMenu' ? RoleSelectMenuInteraction :
 never;
 
 export type ComponentRunner<T extends AnyInteractionComponent> =
-(options: { interaction: InteractionComponentType<T>, args: string[] }) => unknown | Promise<unknown>;
+(options: { interaction: InteractionComponentType<T>, args: string[] }) => any | Promise<any>;
 
-export interface Component<T extends AnyInteractionComponent> {
+export interface ComponentProps<T extends AnyInteractionComponent> {
     customId: string;
     component: T;
     private?: boolean
-    execute: ComponentRunner<T>
+    runner: ComponentRunner<T>
 };
