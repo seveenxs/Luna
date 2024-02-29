@@ -16,7 +16,8 @@
   "author": "Lunaris Team",
   "license": "MIT",
   "dependencies": {
-    "discord.js": "^14.14.1"
+    "discord.js": "^14.14.1",
+    "mongoose": "^8.2.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.17",

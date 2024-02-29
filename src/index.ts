@@ -8,3 +8,5 @@ const client = new LunaClient({
     intents: 122627,
     token: process.env.LunaToken as string
 });
+
+import('./database/index');
