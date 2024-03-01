@@ -4,29 +4,26 @@ import { SchemaProperties, SchemaInferType } from "src/types/Schema";
 export default class Repository<T extends SchemaProperties, U extends SchemaInferType<T>> {
     constructor(public model: Model<any>, public object: T) {}
 
-    private toObject(entity: Document): U | null {
-        return entity ? entity.toObject({ versionKey: false }) : null
-    }
-
-    public async exists(id: U['_id']): Promise<boolean | null> {
+    public async exists(id: U['_id']): Promise<true | null> {
         return (await this.model.findById(id)) ? true : null;
     }
 
-    public remove(id: U['_id']): Promise<U | null> {
-        return this.model.findByIdAndDelete(id).then(this.toObject);
+    public async remove(id: U['_id']): Promise<U | null> {
+        return await this.model.findByIdAndDelete(id);
     }
 
-    public create(data: Pick<U, '_id'> & Partial<U>, returnDocument: boolean = false): Promise<U | null> {
-        return this.model.create(data).then(document => returnDocument ? this.toObject(document) : null)
+    public async create(data: Pick<U, '_id'> & Partial<U>, returnDocument: boolean = false): Promise<U | null> {
+        const document = await this.model.create(data);
+        return returnDocument ? document : null
     }
 
-    public get(id: U['_id']): Promise<U | null> {
-        return this.model.findById(id).then(document => document ? this.toObject(document) : null);
+    public async get(id: U['_id']): Promise<U | null> {
+        return await this.model.findById(id) || null;
     }
 
-    public update(id: U['_id'], update: UpdateQuery<Omit<U, '_id'>>, options?: QueryOptions<U>): Promise<U | null> {
-        return this.model.findByIdAndUpdate({ _id: id }, update, options)
-        .then(document => options?.new ? this.toObject(document) : null)
+    public async update(id: U['_id'], update: UpdateQuery<Omit<U, '_id'>>, options?: QueryOptions<U>): Promise<U | null> {
+        const document = await this.model.findByIdAndUpdate({ _id: id }, update, options)
+        return (options?.new) ? document : null
     }
 
     public async find<K extends keyof U>(id: U['_id'], keys: K): Promise<U[K] | null>
