@@ -14,7 +14,7 @@ import LunaProps from "../types/Luna";
 import { lunaDB } from '../database/index'
 
 export default class LunaClient extends Client {
-    public db: Record<string, any> = lunaDB
+    public db: typeof lunaDB = lunaDB
 
     private static instance: LunaClient;
     public static LunaInstance() { return LunaClient.instance };
