@@ -26,6 +26,12 @@ export default class Repository<T extends SchemaProperties, U extends SchemaInfe
         return (options?.new) ? document : null
     }
 
+    public async findAll(projection?: { [K in keyof U]: 0 | 1 } | {}, filter?: (params: U) => boolean): Promise<U[] | null> {
+        let document = await this.model.find({}, projection) as U[];
+        if (filter) document = document.filter(filter);
+        return document.length > 0  ? document : null;
+    };
+
     public async find<K extends keyof U>(id: U['_id'], keys: K): Promise<U[K] | null>
     public async find<K extends keyof U>(id: U['_id'], keys: K[]): Promise<Pick<U, typeof keys[number]> | null>;
     public async find<K extends (keyof U | Array<keyof U>)>(id: U['_id'], keys: K) {
