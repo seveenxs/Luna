@@ -11,7 +11,7 @@ import { AnyInteractionComponent } from "../types/Components";
 import { EventName } from "../types/Events";
 import LunaProps from "../types/Luna";
 
-import { lunaDB } from '../database/index'
+import { lunaDB } from '@database'
 
 export default class LunaClient extends Client {
     public db: typeof lunaDB = lunaDB
@@ -24,11 +24,11 @@ export default class LunaClient extends Client {
     public components: Collection<string, Component<AnyInteractionComponent>> = new Collection();
     public events: Collection<string, LunaEvent<EventName>> = new Collection();
 
-    public constructor(public properties: LunaProps) {
-        super({ intents: properties.intents });
+    public constructor(public props: LunaProps) {
+        super({ intents: props.intents });
 
         LunaClient.instance = this;
-        this.connect(this.properties.token);
+        this.connect(this.props.token);
     }
 
     public connect(token: string): void {
@@ -53,7 +53,7 @@ export default class LunaClient extends Client {
             else this.on(event.name, event.runner);
 
             this.events.set(event.name, event);
-            colorize(`Event [${event.name}](#f58442) successful to load.`, true)
+            colorize(`Event [${event.name}](#f58442)[[${eventFile.split('\\').slice(-1).join('')}](bold green)] successful to load.`, true)
         };
     };
 
@@ -66,7 +66,7 @@ export default class LunaClient extends Client {
             if (!command) return;
 
             this.PrefixCommands.set(command.name, command);
-            colorize(`PrefixCommand [${command.name}](#f58442) successful to load.`, true)
+            colorize(`PrefixCommand [${command.name}](#f58442)[[${prefixCommand.split('\\').slice(-1).join('')}](bold green)] successful to load.`, true)
         }
 
         for (const slashCommand of slashCommandFiles) {
@@ -74,7 +74,7 @@ export default class LunaClient extends Client {
             if (!command) return;
 
             this.SlashCommands.set(command.data.name, command);
-            colorize(`SlashCommand [${command.data.name}](#f58442) successful to load.`, true)
+            colorize(`SlashCommand [${command.data.name}](#f58442)[[${slashCommand.split('\\').slice(-1).join('')}](bold green)] successful to load.`, true)
         }
     }
 }
