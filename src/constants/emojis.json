@@ -1,5 +1,10 @@
 {
     "LunaCategories": {
-        "utilidades": ""
+        "utilidades": "",
+        "desenvolvimento": ""
+    },
+
+    "LunaGlobal": {
+        "LunaDB": "<:dadosdanuvem:1170378166972461158>"
     }
 }
