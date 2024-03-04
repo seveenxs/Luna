@@ -1,11 +1,11 @@
-export type SchemaPropertyType = NumberConstructor | StringConstructor | BooleanConstructor | ArrayConstructor | MapConstructor;
+export type SchemaPropertyType = NumberConstructor | StringConstructor | BooleanConstructor | ArrayConstructor | MapConstructor | DateConstructor;
 
-export interface SchemaProperty { 
-  type: SchemaPropertyType,
+export type SchemaProperty = { 
+  type?: SchemaPropertyType,
   of?: SchemaPropertyType
   required?: boolean,
   default?: unknown 
-}
+} | SchemaSubProperties
 
 export type SchemaProperties = {
   [x: string]: SchemaProperty | SchemaSubProperties
@@ -27,6 +27,7 @@ export type SchemaInferType<T extends SchemaProperties> = {
         U["type"] extends BooleanConstructor ? boolean :
         U["type"] extends ArrayConstructor ? Array<unknown> :
         U["type"] extends MapConstructor ? Map<unknown, unknown> :
+        U["type"] extends DateConstructor ? Date :
         never :      
       never :
     never :
