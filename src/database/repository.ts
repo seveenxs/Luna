@@ -32,8 +32,8 @@ export default class Repository<T extends SchemaProperties, U extends SchemaInfe
         return document.length > 0  ? document : null;
     };
 
-    public async find<K extends keyof U>(id: U['_id'], keys: K): Promise<U[K] | null>
-    public async find<K extends keyof U>(id: U['_id'], keys: K[]): Promise<Pick<U, typeof keys[number]> | null>;
+    public async find<K extends keyof U>(id: U['_id'], keys: K): Promise<null | U[K]>
+    public async find<K extends Array<keyof U>>(id: U['_id'], keys: K): Promise<null | Pick<U, typeof keys[number]>>;
     public async find<K extends (keyof U | Array<keyof U>)>(id: U['_id'], keys: K) {
         let document = await this.get(id) as U;
         if (!document) return null;
