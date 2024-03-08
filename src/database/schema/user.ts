@@ -4,8 +4,9 @@ export const userObject = {
     _id: { type: String, required: true },
     stardust: { type: Number, default: 0 },
     blacklist: {
-        banned: { type: String, default: '0' },
-        timestamp: { type: Date,  default: +Date.now()}
+        banned: { type: Boolean, default: false },
+        timestamp: { type: Date,  default: +Date.now()},
+        reason: { type: String, default: 'sem razão' }
     }
 };
 
