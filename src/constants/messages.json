@@ -3,7 +3,12 @@
         "PrefixedCommand": {
             "database": {
                 "mention": "[LunaDB] › <author>, eu procurei em todo o meu **banco de dados** e não encontrei informação alguma sobre o usuário **<mention>**",
-                "author": "[LunaDB] › <author>, Eu vi que você não possui informações em meu **banco de dados**, utilize o comando `<command>` ou `/verificar` para desfrutar de todos os meus comandos."
+                "author": "[LunaDB] › <author>, Eu vi que você não possui informações em meu **banco de dados**, utilize o comando `<prefix>verificar` ou `/verificar` para desfrutar de todos os meus comandos."
+            },
+
+            "blacklist": {
+                "mention": "[Warning] › <author>, **<mention>** está **banido(a) permanentemente**. \n🔹 › **Expira**: <bantime> \n🔹 › **Motivo**: <banreason>",
+                "author": "[Warning] › <author>, **você** está **banido(a) permanentemente**. \n🔹 › **Expira**: <bantime> \n🔹 › **Motivo**: <banreason>"
             }
         }
     }
