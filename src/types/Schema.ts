@@ -1,37 +1,33 @@
-export type SchemaPropertyType = NumberConstructor | StringConstructor | BooleanConstructor | ArrayConstructor | MapConstructor | DateConstructor;
+export type AnyTypeConstructor = StringConstructor | NumberConstructor | BooleanConstructor | ArrayConstructor | MapConstructor | ObjectConstructor | DateConstructor;
 
-export type SchemaProperty = { 
-  type?: SchemaPropertyType,
-  of?: SchemaPropertyType
-  required?: boolean,
-  default?: unknown 
-} | SchemaSubProperties
+export interface ObjectProperty {
+  type?: AnyTypeConstructor;
+  of?: AnyTypeConstructor;
+  required?: Boolean;
+  default?: unknown
+};
 
-export type SchemaProperties = {
-  [x: string]: SchemaProperty | SchemaSubProperties
-} & {
-  _id: { type: StringConstructor, required: boolean }
+export type ObjectSubProperties = {
+  [key: string]: ObjectProperty
 }
 
-export interface SchemaSubProperties {
-  [x: string]: SchemaProperty
+export type ObjectProperties = {
+  [key: string]: ObjectProperty | ObjectSubProperties
 }
 
-export type SchemaInferType<T extends SchemaProperties> = {
-  [K in keyof T as T[K] extends SchemaProperties | SchemaProperty ? K : never]: T[K] extends infer U ? 
-    U extends SchemaProperties ? SchemaInferType<U> :   
-      U extends SchemaProperty ?
-       U["type"] extends SchemaPropertyType ?
-        U["type"] extends NumberConstructor ? number :
-        U["type"] extends StringConstructor ? string :
-        U["type"] extends BooleanConstructor ? boolean :
-        U["type"] extends ArrayConstructor ? Array<unknown> :
-        U["type"] extends MapConstructor ? Map<unknown, unknown> :
-        U["type"] extends DateConstructor ? Date :
-        never :      
-      never :
-    never :
+export type ObjectDefineType<T extends ObjectProperties> = {
+  [K in keyof T as T[K] extends ObjectProperties | ObjectSubProperties | ObjectProperty ? K : never]: T[K] extends infer U ?
+  U extends ObjectProperties ? ObjectDefineType<U> :
+  U extends ObjectProperty ? U["type"] extends AnyTypeConstructor ?
+  U["type"] extends StringConstructor ? String :
+  U["type"] extends NumberConstructor ? Number :
+  U["type"] extends BooleanConstructor ? true | false :
+  U["type"] extends ArrayConstructor ? Array<any> :
+  U["type"] extends MapConstructor ? Map<any, any> :
+  U["type"] extends ObjectConstructor ? Object :
+  U["type"] extends DateConstructor ? Date :
+  never :
+  never :
+  never :
   never
-} & {
-  _id: string
 }
