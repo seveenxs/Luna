@@ -1,15 +1,18 @@
 {
-    "handler": {
-        "PrefixedCommand": {
-            "database": {
-                "mention": "[LunaDB] › <author>, eu procurei em todo o meu **banco de dados** e não encontrei informação alguma sobre o usuário **<mention>**",
-                "author": "[LunaDB] › <author>, Eu vi que você não possui informações em meu **banco de dados**, utilize o comando `<prefix>verificar` ou `/verificar` para desfrutar de todos os meus comandos."
-            },
-
-            "blacklist": {
-                "mention": "[Warning] › <author>, **<mention>** está **banido(a) permanentemente**. \n🔹 › **Expira**: <bantime> \n🔹 › **Motivo**: <banreason>",
-                "author": "[Warning] › <author>, **você** está **banido(a) permanentemente**. \n🔹 › **Expira**: <bantime> \n🔹 › **Motivo**: <banreason>"
-            }
+    "MESSAGES": {
+        "PREMIUM": "🎉 **› [autor]**, você encontrou um **comando premium** meu. Use o comando `[comando]` e veja todos os **benefícios** que o premium lhe proporciona.",
+        "COOLDOWN": "⏰ **›** Calma aí, **[autor]**! você está **usando** os meus **comandos** rápido demais, você poderá **executar** outro comando novamente <t:[cooldown]:R>",
+        "VERIFY": {
+            "AUTHOR": "#LunaDB **› [autor]**, Eu vi que você não está verificado em meu **banco de dados**. Use o comando `[comando]` para obter acesso aos meus comandos.",
+            "MENTION": "#LunaDB **› [autor]**, A execução do comando foi cancelada, pois o usuário **[mencao]** não faz parte do meu **banco de dados**."
+        },
+        "BLACKLIST": {
+            "AUTHOR": "#LunaError **› [autor]**, você foi **banido(a) permanentemente** do meu sistema!",
+            "MENTION": "#LunaError **› [autor]**,o usuário **[mencao]** foi **banido(a) permanentemente** do meu sistema!"
+        },
+        "PERMISSION": {
+            "AUTHOR": "#LunaError **› [autor]**, você não tem as **permissões necessárias** para executar esse **comando**, você precisa das **permissões**: [permissoes]",
+            "CLIENT": "#LunaError **› [autor]**, eu não tenho as **permissões necessárias** para executar o **comando**, eu preciso das **permissões**: [permissoes]"
         }
     }
 }
