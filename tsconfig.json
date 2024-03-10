@@ -20,6 +20,8 @@
       "@constructors/*": ["./src/constructors/*"],
       "@constants/*": ["./src/constants/*"],
       "@classes/*": ["./src/classes/*"],
+      "@database": ["./src/database/index.ts"],
+      "@functions/*": ["./src/functions/*"],
     },
     "typeRoots": [
       "./node_modules/@types"
