@@ -33,7 +33,7 @@ export default class Repository<T extends ObjectProperties, U extends ObjectDefi
     };
 
     public async find<K extends keyof U>(id: String, keys: K): Promise<null | U[K]>
-    public async find<K extends Array<keyof U>>(id: String, keys: K): Promise<null | Pick<U, typeof keys[number]>>;
+    public async find<K extends keyof U>(id: String, keys: K[]): Promise<null | Pick<U, typeof keys[number]>>;
     public async find<K extends (keyof U | Array<keyof U>)>(id: String, keys: K) {
         let document = await this.get(id) as U;
         if (!document) return null;
