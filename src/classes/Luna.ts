@@ -42,7 +42,7 @@ export default class LunaClient extends Client {
         .catch((error) => colorize(`[[✖](red) An [error](red) occurred while attempting to connect to the client:](bold) \n${error}`, true));
     }
 
-    public async loadEvents(): Promise<void> {
+    private async loadEvents(): Promise<void> {
         const eventFiles: string[] = globSync('src/luna/events/**/*.{js,ts}');
 
         for (const eventFile of eventFiles) {
@@ -57,7 +57,7 @@ export default class LunaClient extends Client {
         };
     };
 
-    public async loadCommands(): Promise<void> {
+    private async loadCommands(): Promise<void> {
         const prefixCommandFiles = globSync('src/luna/commands/prefix/**/*.{js,ts}');
         const slashCommandFiles = globSync('src/luna/commands/slash/**/*.{js,ts}');
 
