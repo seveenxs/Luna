@@ -3,6 +3,7 @@ import { Schema, model } from "mongoose";
 export const userObject = {
     _id: { type: String, required: true },
     stardust: { type: Number, default: 0 },
+    premium: { type: Boolean, default: false },
     blacklist: {
         banned: { type: Boolean, default: false },
         timestamp: { type: Date,  default: +Date.now()},
