@@ -8,7 +8,7 @@ export type PrefixCommandRunner = (options: { client: LunaClient, message: Messa
 
 export interface PrefixCommandInformation {
     description: string;
-    howToUsage: string;
+    howToUsage: string | string[];
     category: PrefixCommandCategory
 }
 
