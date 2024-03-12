@@ -1,9 +1,8 @@
 import { Permissions } from '@constants/permission.json';
-import { MESSAGES } from '@constants/messages.json';
 
 import LunaClient from "@classes/Luna";
 import LunaEvent from "@classes/Event";
-import formatEmoji from '@functions/formatEmoji';
+import formatError from '@functions/utils/formatError';
 
 const cooldown = new Map();
 const Translator = (input: string[]) => input.map(p => `\`${Permissions[p as keyof typeof Permissions]}\`` || p).join(', ');
@@ -37,49 +36,38 @@ export default new LunaEvent({
         const authorDb = await client.db.user.find(message.author.id, ['blacklist', 'premium']);
         const mentionDb = await client.db.user.find(user?.id!, 'blacklist');
 
-        if (!authorDb || !mentionDb && user)
-            return message.channel.send({
-                content: formatEmoji(!authorDb ? MESSAGES.VERIFY.AUTHOR : MESSAGES.VERIFY.MENTION)
-                    .replace(/\[(\w+)\]/g, (_, keyword) => keyword === 'autor' ? message.author.username : keyword === 'comando' ? prefix + 'verificar' : keyword === 'mencao' ? user?.username : keyword),
-                allowedMentions: { parse: [] }
-            });
+        if (!authorDb)
+            return message.channel.send(
+                formatError('VERIFY_AUTHOR', message.author.username, prefix + 'verificar'));
 
-        if (authorDb.blacklist.banned || mentionDb?.banned && user)
-            return message.channel.send({
-                content: formatEmoji(authorDb.blacklist.banned ? MESSAGES.BLACKLIST.AUTHOR : MESSAGES.BLACKLIST.MENTION)
-                    .replace(/\[(\w+)\]/g, (_, keyword) => keyword === 'autor' ? message.author.username : keyword === 'mencao' ? user?.username : keyword),
-                allowedMentions: { parse: [] }
-            });
+        if (authorDb.blacklist.banned)
+            return message.channel.send(
+                formatError('BLACKLISTED_AUTHOR', message.author.username));
+
+        if (!mentionDb && user)
+            return message.channel.send(
+                formatError('VERIFY_MENTIONED', message.author.username, user?.username));
+
+        if (mentionDb?.banned && user)
+            return message.channel.send(
+                formatError('BLACKLISTED_MENTIONED', message.author.username, user?.username));
 
         if (!authorDb.premium && command.exclusive)
-            return message.channel.send({
-                content: formatEmoji(MESSAGES.PREMIUM)
-                    .replace(/\[(\w+)\]/g, (_, keyword) => keyword === 'autor' ? message.author.username : keyword === 'comando' ? prefix + 'premium' : keyword === 'mencao' ? user?.username : keyword),
-                allowedMentions: { parse: [] }
-            });
+            return message.channel.send(
+                formatError('USER_IS_PREMIUM', message.author.username, prefix + 'premium'));
 
         if (command.permission?.author && !message.member?.permissions.has(command.permission?.author || []))
-            return message.channel.send({
-                content: formatEmoji(MESSAGES.PERMISSION.AUTHOR)
-                .replace(/\[(\w+)\]/g, (_, keyword) => keyword === 'autor' ? message.author.username : keyword === 'permissoes' ? Translator(command.permission?.author as string[]) : keyword),
-                allowedMentions: { parse: [] }
-            });
+            return message.channel.send(
+                formatError('PERMISSIONS_AUTHOR', message.author.username, Translator(command.permission?.author as string[])));
 
         if (command.permission?.client && !message.guild.members.me?.permissions.has(command.permission?.client || []))
-            return message.channel.send({
-                content: formatEmoji(MESSAGES.PERMISSION.CLIENT)
-                .replace(/\[(\w+)\]/g, (_, keyword) => keyword === 'autor' ? message.author.username : keyword === 'permissoes' ? Translator(command.permission?.client as string[]) : keyword),
-                allowedMentions: { parse: [] }
-            });
+            return message.channel.send(
+                formatError('PERMISSIONS_CLIENT', message.author.username, Translator(command.permission?.client as string[])));
 
         const cooldownMs = cooldown.get(`${message.author.id}`);
-
         if (cooldown.has(`${message.author.id}`))
-            return message.channel.send({
-                content: formatEmoji(MESSAGES.COOLDOWN)
-                    .replace(/\[(\w+)\]/g, (_, keyword) => keyword === 'autor' ? message.author.username : keyword === 'cooldown' ? ~~(cooldownMs / 1000) : keyword),
-                allowedMentions: { parse: [] }
-            });
+            return message.channel.send(
+                formatError('USER_IS_IN_COOLDOWN', message.author.username, ~~(cooldownMs / 1000)));
 
         cooldown.set(`${message.author.id}`, +Date.now() + 5000);
         setTimeout(() => cooldown.delete(`${message.author.id}`), 5000);
